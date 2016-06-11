@@ -1,6 +1,7 @@
 <!DOCTYPE HTML>
 <html>
     <head>
+        <link href='https://fonts.googleapis.com/css?family=Merriweather:300italic,700,300' rel='stylesheet' type='text/css'>
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>Zaine Kingi's Photo Gallery</title>
         <link rel="stylesheet" href="css/NormalizeCss1.0.min.css">
@@ -9,74 +10,81 @@
     <body>
         <div class="wrapper">
             <div class="header">
-                <h1>Zaine's Photo Gallery</h1>
-                <p>A life-time of travel inspiration.</p>
-                <input type="search" name="search" id="search" placeholder="Search">
+                <div class="header-wrap">
+                    <div class="title">
+                        <h1>Zaine's Photo Gallery</h1>
+                        <p>A life-time of travel inspiration.</p>
+                    </div>
+                    <input type="search" name="search" id="search" placeholder="Search">
+                </div>
             </div>
             <div class="gallery-wrap">
                 <div class="gallery-img">
-                    <a href="imgs/01.jpg" alt="I love hay bales. Took this snap on a drive through the countryside past some straw fields." title="Hay Bales">
+                    <a onclick="gallery()" href="imgs/01.jpg" title="Hay Bales">
                         <img src="imgs/thumb/01.jpg" alt="I love hay bales. Took this snap on a drive through the countryside past some straw fields." title="Hay Bales">
                     </a>
                 </div>
                 <div class="gallery-img">
-                    <a href="imgs/02.jpg" alt="The lake was so calm today. We had a great view of the snow on the mountains from here." title="Lake">
+                    <a onclick="gallery()" href="imgs/02.jpg" title="Lake">
                         <img src="imgs/thumb/02.jpg" alt="The lake was so calm today. We had a great view of the snow on the mountains from here." title="Lake">
                     </a>
                 </div>
                 <div class="gallery-img">
-                    <a href="imgs/03.jpg" alt="I hiked to the top of the mountain and got this picture of the canyon and trees below." title="Canyon">
+                    <a onclick="gallery()" href="imgs/03.jpg" title="Canyon">
                         <img src="imgs/thumb/03.jpg" alt="I hiked to the top of the mountain and got this picture of the canyon and trees below." title="Canyon">
                     </a>
                 </div>
                 <div class="gallery-img">
-                    <a href="imgs/04.jpg" alt="It was amazing to see an iceberg up close, it was so cold but didn’t snow today." title="Iceberg">
+                    <a onclick="gallery()" href="imgs/04.jpg" title="Iceberg">
                         <img src="imgs/thumb/04.jpg" alt="It was amazing to see an iceberg up close, it was so cold but didn’t snow today." title="Iceberg">
                     </a>
                 </div>
                 <div class="gallery-img">
-                    <a href="imgs/05.jpg" alt="The red cliffs were beautiful. It was really hot in the desert but we did a lot of walking through the canyons." title="Desert">
+                    <a onclick="gallery()" href="imgs/05.jpg" title="Desert">
                         <img src="imgs/thumb/05.jpg" alt="The red cliffs were beautiful. It was really hot in the desert but we did a lot of walking through the canyons." title="Desert">
                     </a>
                 </div>
                 <div class="gallery-img">
-                    <a href="imgs/06,jpg" alt="Fall is coming, I love when the leaves on the trees start to change color." title="Fall">
+                    <a onclick="gallery()" href="imgs/06.jpg" title="Fall">
                         <img src="imgs/thumb/06.jpg" alt="Fall is coming, I love when the leaves on the trees start to change color." title="Fall">
                     </a>
                 </div>
                 <div class="gallery-img">
-                    <a href="imgs/07.jpg" alt="I drove past this plantation yesterday, everything is so green!" title="Plantation">
+                    <a onclick="gallery()" href="imgs/07.jpg" title="Plantation">
                         <img src="imgs/thumb/07.jpg" alt="I drove past this plantation yesterday, everything is so green!" title="Plantation">
                     </a>
                 </div>
                 <div class="gallery-img">
-                    <a href="imgs/08.jpg" alt="My summer vacation to the Oregon Coast. I love the sandy dunes!" title="Dunes">
+                    <a onclick="gallery()" href="imgs/08.jpg" title="Dunes">
                         <img src="imgs/thumb/08.jpg" alt="My summer vacation to the Oregon Coast. I love the sandy dunes!" title="Dunes">
                     </a>
                 </div>
                 <div class="gallery-img">
-                    <a href="imgs/09.jpg" alt="We enjoyed a quiet stroll down this countryside lane." title="Countryside Lane">
+                    <a onclick="gallery()" href="imgs/09.jpg" title="Countryside Lane">
                         <img src="imgs/thumb/09.jpg" alt="We enjoyed a quiet stroll down this countryside lane." title="Countryside Lane">
                     </a>
                 </div>
                 <div class="gallery-img">
-                    <a href="imgs/10.jpg" alt="Sunset at the coast! The sky turned a lovely shade of orange." title="Sunset">
+                    <a onclick="gallery()" href="imgs/10.jpg" title="Sunset">
                         <img src="imgs/thumb/10.jpg" alt="Sunset at the coast! The sky turned a lovely shade of orange." title="Sunset">
                     </a>
                 </div>
                 <div class="gallery-img">
-                    <a href="imgs/11.jpg" alt="I did a tour of a cave today and the view of the landscape below was breathtaking." title="Cave">
+                    <a onclick="gallery()" href="imgs/11.jpg" title="Cave">
                         <img src="imgs/thumb/11.jpg" alt="I did a tour of a cave today and the view of the landscape below was breathtaking." title="Cave">
                     </a>
                 </div>
                 <div class="gallery-img">
-                    <a href="imgs/12.jpg" alt="I walked through this meadow of bluebells and got a good view of the snow on the mountain before the fog came in." title="Bluebells">
+                    <a onclick="gallery()" href="imgs/12.jpg" title="Bluebells">
                         <img src="imgs/thumb/12.jpg" alt="I walked through this meadow of bluebells and got a good view of the snow on the mountain before the fog came in." title="Bluebells">
                     </a>
                 </div>
             </div>
         </div>
+        <footer>
+            <p>&copy; Zaine Kingi 2016</p>
+        </footer>
+        <script type="text/javascript" src="bower_components/jquery/dist/jquery.min.js"></script>
+        <script type="text/javascript" src="js/gallery.js"></script>
     </body>
-    <script type="text/javascript" href="bower_components/jquery/dist/jquery.min.js"></script>
-    <script type="text/javascript" href="js/main.js"></script>
 </html>
