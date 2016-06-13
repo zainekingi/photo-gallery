@@ -22,14 +22,16 @@
 function gallery() {
 
 	var galleryBg,
+		curImg,
 		parent,
 		firstImg,
 		lastImg,
 		nextSib,
-		nextA,
-		nextHref,
-		nextTitle,
-		nextAlt,
+		newA,
+		newHref,
+		newTitle,
+		newAlt,
+		prevSib,
 		lbClose,
 		newImg,
 		lbImg,	// gallery image || gallery video.
@@ -50,7 +52,10 @@ function gallery() {
 
 		// check to see if the gallery has been created, if not create the gallery and set the flag.
 		if (flag !== false) {
+
+			// gallery is already triggered, add the shutDwn function to the close button.
 			lbClose.addEventListener('click', shutDwn);
+
 		} else {
 
 			// create a black back drop when a click is triggered.
@@ -85,6 +90,24 @@ function gallery() {
 				nextArrow = document.createElement('span');	// right addle navigation.
 			lbClose = document.createElement('div');	// gallery exit button.
 
+			// check if we need a <img> || <video> element created.
+			if (ext !== 'jpg') {
+				// build the video.
+				lbImg = document.createElement('iframe');
+				lbImg.setAttribute('src', imgLink);
+				lbImg.setAttribute('frameborder', '0');
+				lbImg.innerHTML = 'allowfullscreen';
+			} else {
+				// build the image.
+				lbImg = document.createElement('img');
+				lbImg.setAttribute('src', imgLink);
+			}
+
+			// assign the values to each newly created element.
+			lbTitle.innerHTML = title;
+			lbCaption.innerHTML = caption;
+			lbClose.innerHTML = '<h1 class="exit">X</h1>';
+
 			// function to scroll to the next image.
 			function nextImg() {
 
@@ -108,49 +131,81 @@ function gallery() {
 				}
 
 				// get the next anchor element.
-				nextA = nextSib.children[0];
+				newA = nextSib.children[0];
 
 				// get the href attribute [ *div ~ div > a(href) ]
-				nextHref = nextA.getAttribute('href');
+				newHref = newA.getAttribute('href');
 
 				// get the next images title and alt attributes [ div > a > img(title & alt) ]
-				nextTitle = nextA.children[0].getAttribute('title');
-				nextAlt = nextA.children[0].getAttribute('alt');
+				newTitle = newA.children[0].getAttribute('title');
+				newAlt = newA.children[0].getAttribute('alt');
 
 				// console.log(nextAlt);
 
 				// construct the next image attributes.
 				newImg = {
-					imgLink: nextHref,
-					title: nextTitle,
-					caption: nextAlt
+					imgLink: newHref,
+					title: newTitle,
+					caption: newAlt
 				};
-				console.log(newImg);
 
+
+				// get the number of images in the gallery.
+				var count = document.getElementById('gallery-wrap').children.length;
+
+				console.log(count);
+
+				lbImg.setAttribute('src', newImg.imgLink);
+				lbTitle.innerHTML = newImg.title;
+				lbCaption.innerHTML = newImg.caption;
+			}
+
+			// function to scroll to the previous image.
+			function prevImg() {
+
+				// check if the first image was click.
+				if (parent == firstImg) {
+					// get the last image as the next sibling.
+					prevSib = firstImg;
+					// console.log(prevSib);
+				} else {
+					prevSib = parent.previousElementSibling;
+					// console.log(prevSib);
+				}
+
+				// get the previous anchor element.
+				newA = prevSib.children[0];
+
+				// get the href attribute [ *div ~ div > a(href) ]
+				newHref = newA.getAttribute('href');
+
+				// get the next images title and alt attributes [ div > a > img(title & alt) ]
+				newTitle = newA.children[0].getAttribute('title');
+				newAlt = newA.children[0].getAttribute('alt');
+
+				// console.log(newAlt);
+
+				// construct the next image attributes.
+				newImg = {
+					imgLink: newHref,
+					title: newTitle,
+					caption: newAlt
+				};
+
+
+				// get the number of images in the gallery.
+				var count = document.getElementById('gallery-wrap').children.length;
+
+				console.log(count);
+
+				lbImg.setAttribute('src', newImg.imgLink);
+				lbTitle.innerHTML = newImg.title;
+				lbCaption.innerHTML = newImg.caption;
 			}
 
 			// add the onclick function nextImg to the next arrow.
 			nextArrow.addEventListener('click', nextImg);
-
-			// function to scroll to the previous image.
-
-			// check if we need a <img> || <video> element created.
-			if (ext !== 'jpg') {
-				// build the video.
-				lbImg = document.createElement('iframe');
-				lbImg.setAttribute('src', imgLink);
-				lbImg.setAttribute('frameborder', '0');
-				lbImg.innerHTML = 'allowfullscreen';
-			} else {
-				// build the image.
-				lbImg = document.createElement('img');
-				lbImg.setAttribute('src', imgLink);
-			}
-
-			// assign the values to each newly created element.
-			lbTitle.innerHTML = title;
-			lbCaption.innerHTML = caption;
-			lbClose.innerHTML = '<h1 class="exit">X</h1>';
+			prevArrow.addEventListener('click', prevImg);
 			prevArrow.className = 'prevArrow';
 			nextArrow.className = 'nextArrow';
 			lbClose.setAttribute('id', 'close');
