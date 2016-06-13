@@ -14,7 +14,7 @@ body {
     background-color: rgba(0,0,0,.8);
     background-size: cover;
     width: 100%;
-    height: auto;
+    height: 100%;
     position: absolute;
     left: 0px;
     z-index: 100;
@@ -23,13 +23,11 @@ body {
 .gallery-bg iframe {
     display: block;
     width: 60%;
-    height: auto;
     margin: 5% auto 2%;
     border: 5px solid #fff;
-    -webkit-transition: display .4s;
-    -moz-transition: display .4s;
-    -o-transition: display .4s;
-    transition: display .4s;
+}
+.gallery-bg iframe {
+    min-height: 500px;
 }
 .gallery-bg h2 {
     color: #fff;
