@@ -159,6 +159,15 @@ function gallery() {
 			// function to scroll to the previous image.
 			function prevImg() {
 
+				// get the target elements parent [ img < a < *div ].
+				parent = e.target.parentNode.parentNode;
+
+				// the first sibling - if the nextSib === null.
+				firstImg = document.getElementById('gallery-wrap').firstElementChild;
+
+				// the last image.
+				lastImg = document.getElementById('gallery-wrap').lastElementChild;
+
 				// check if the first image was click.
 				if (parent == firstImg) {
 					// get the last image as the next sibling.
