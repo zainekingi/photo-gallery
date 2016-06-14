@@ -1,28 +1,26 @@
 /* =====================================================
-	FILE: gallery.js
-	----------------------------------------------------
-	Author: Zaine Kingi
-	Date: 9-06-16
-	Version: 1.0a
-	Description: JS file for the photo gallery functionality.
--------------------------------------------------------- */
+ FILE: gallery.js
+ ----------------------------------------------------
+ Author: Zaine Kingi
+ Date: 9-06-16
+ Version: 1.0a
+ Description: JS file for the photo gallery functionality.
+ -------------------------------------------------------- */
 
 /* --------------------------------------------------------
-
  Problem:	Display a large Hi-Res image when a user clicks
- 			on any thumbnail images.
-
+ on any thumbnail images.
  Solution:	Create a lightbox function to add a black back
- 			drop and style, resize and display the link hi-res
- 			image, title and alt attributes of each image.
-
-----------------------------------------------------------*/
+ drop and style, resize and display the link hi-res
+ image, title and alt attributes of each image.
+ ----------------------------------------------------------*/
 
 // create a gallery function.
 function gallery() {
 
 	var galleryBg,
 		curImg,
+		topPos,
 		parent,
 		firstImg,
 		lastImg,
@@ -41,6 +39,7 @@ function gallery() {
 	document.addEventListener("click", function(e){
 
 		// prevent default anchor click behaviour.
+		var imgLink;
 		e.preventDefault() && e.stopPropagation();
 
 		// gallery already set, close it down.
@@ -62,26 +61,23 @@ function gallery() {
 			galleryBg = document.createElement('div');
 			galleryBg.className = 'gallery-bg';
 
+			// calculate the page top location by getting the users Y-offset position.
+			topPos = window.pageYOffset;
+
 			// assign galleryBg top positioning values.
-			galleryBg.style.top = '0px';
+			galleryBg.style.top = topPos + 'px';
+
 
 			// append the gallery background to the body.
 			document.body.appendChild(galleryBg);
 
 			// disable scroll on the body.
-			//document.body.style.overflowY = 'hidden';
+			document.body.style.overflowY = 'hidden';
 
 			// set the link to the hiRes image.
-			var imgLink = e.target.parentNode.href,
-
-			// check if the extension of the href value is an image or other[ video ].
-				ext = imgLink.split('.').pop(),
-
-			// set the title text for the image.
-				title = e.target.title,
-
-			// set the caption text for the image.
-				caption = e.target.alt;
+			imgLink = e.target.parentNode.href;
+			var title = e.target.title;
+			var caption = e.target.alt;
 
 			// create the DOM elements for each needed element.
 			var lbTitle = document.createElement('h2'),		// image title.
@@ -91,16 +87,16 @@ function gallery() {
 			lbClose = document.createElement('div');	// gallery exit button.
 
 			// check if we need a <img> || <video> element created.
-			if (ext !== 'jpg') {
+			if (imgLink.split('.').pop() === 'jpg') {
+				// build the image.
+				lbImg = document.createElement('img');
+				lbImg.setAttribute('src', imgLink);
+			} else {
 				// build the video.
 				lbImg = document.createElement('iframe');
 				lbImg.setAttribute('src', imgLink);
 				lbImg.setAttribute('frameborder', '0');
-				lbImg.innerHTML = 'allowfullscreen';
-			} else {
-				// build the image.
-				lbImg = document.createElement('img');
-				lbImg.setAttribute('src', imgLink);
+				// lbImg.setAttributeNode('allowfullscreen');
 			}
 
 			// assign the values to each newly created element.
@@ -194,9 +190,8 @@ function gallery() {
 
 
 				// get the number of images in the gallery.
-				var count = document.getElementById('gallery-wrap').children.length;
-
-				console.log(count);
+				//var count = document.getElementById('gallery-wrap').children.length;
+				// console.log(count);
 
 				lbImg.setAttribute('src', newImg.imgLink);
 				lbTitle.innerHTML = newImg.title;
