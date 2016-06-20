@@ -8,6 +8,9 @@
 body {
     overflow-x: hidden;
 }
+ul {
+    list-style-type: none;
+}
 /* Lightbox Element Styling */
 .gallery-bg {
     display: block;
