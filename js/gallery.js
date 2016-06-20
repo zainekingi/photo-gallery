@@ -19,6 +19,7 @@
 function gallery() {
 
 	var galleryBg,
+		imgArray,
 		curImg,
 		topPos,
 		parent,
@@ -33,7 +34,8 @@ function gallery() {
 		lbClose,
 		newImg,
 		lbImg,	// gallery image || gallery video.
-		flag = false;
+		flag = false,
+		list = document.getElementById('gallery-wrap').children;	// create a list of the images.
 
 	// get the element that receives that triggers a click.
 	document.addEventListener("click", function(e){
@@ -62,11 +64,10 @@ function gallery() {
 			galleryBg.className = 'gallery-bg';
 
 			// calculate the page top location by getting the users Y-offset position.
-			topPos = window.pageYOffset;
+			topPos = window.pageYOffset; //console.log(topPos);
 
 			// assign galleryBg top positioning values.
 			galleryBg.style.top = topPos + 'px';
-
 
 			// append the gallery background to the body.
 			document.body.appendChild(galleryBg);
@@ -107,36 +108,67 @@ function gallery() {
 			// function to scroll to the next image.
 			function nextImg() {
 
-				// get the target elements parent [ img < a < *div ].
-				parent = e.target.parentNode.parentNode;
+				// get the index position of the clicked element.
 
-				// the first sibling - if the nextSib === null.
-				firstImg = document.getElementById('gallery-wrap').firstElementChild;
+					// get the parent element.
+					var parent = document.getElementById('gallery-wrap');
 
-				// the last image.
-				lastImg = document.getElementById('gallery-wrap').lastElementChild;
+					// get current images li.
+					var clickedImg = e.target.parentNode.parentNode;
 
-				// check if the last image was click.
-				if (parent == lastImg) {
-					// get the first image as the next sibling.
-					nextSib = firstImg;
+					// get the index of the clicked image.
+					function getIndex() {
+
+						// loop through the list of images incrementing the count[i].
+						for (var i = 0, len = list.length; i < len; i++) {
+
+							// check if the clicked image is equal to the count number.
+							if (clickedImg === list[i]) {
+
+								// return the count to the function.
+								return i;
+							}
+						}
+					}
+
+				// assign the returned value of the getIndex function to curImg.
+				curImg = getIndex(); // console.log(curImg);
+
+				if (curImg === parent.children.length - 1) {
+					curImg = 0;
+					nextSib = curImg;
 					// console.log(nextSib);
 				} else {
-					nextSib = parent.nextElementSibling;
-					// console.log(nextSib);
+					curImg ++;
+					nextSib = curImg;
+					// console.log('the next sibling is ' + nextSib);
 				}
 
+				// create array of gallery images.
+				function toArray() {
+
+					// loop through all the images in list incrementing the count.
+					for(var i = 0, array = []; i < list.length; i++)
+
+						// for each image in the list, push into the array object.
+						array.push(list[i]);
+
+						// return the array to the function.
+						return array
+				}
+				// assign the value of the toArray function to the imageArr variable.
+				imgArray = toArray(); //console.log(imgArray[nextSib]);
+
+				// get the image information for the next sibling.
 				// get the next anchor element.
-				newA = nextSib.children[0];
+				newA = imgArray[nextSib].children[0]; //console.log(newA.children[0]);
 
 				// get the href attribute [ *div ~ div > a(href) ]
-				newHref = newA.getAttribute('href');
+				newHref = newA.getAttribute('href'); //console.log(newHref);
 
 				// get the next images title and alt attributes [ div > a > img(title & alt) ]
 				newTitle = newA.children[0].getAttribute('title');
 				newAlt = newA.children[0].getAttribute('alt');
-
-				// console.log(nextAlt);
 
 				// construct the next image attributes.
 				newImg = {
@@ -145,15 +177,22 @@ function gallery() {
 					caption: newAlt
 				};
 
+				// check if we need a <img> || <video> element created.
+				if (newImg.imgLink.split('.').pop() === 'jpg') {
+					// build the image.
+					lbImg = document.createElement('img');
+					lbImg.setAttribute('src', newImg.imgLink);
+				} else {
+					// build the video.
+					lbImg = document.createElement('iframe');
+					lbImg.setAttribute('src', newImg.imgLink);
+					lbImg.setAttribute('frameborder', '0');
+					// lbImg.setAttributeNode('allowfullscreen');
+				}
 
-				// get the number of images in the gallery.
-				var count = document.getElementById('gallery-wrap').children.length;
-
-				console.log(count);
-
-				lbImg.setAttribute('src', newImg.imgLink);
 				lbTitle.innerHTML = newImg.title;
 				lbCaption.innerHTML = newImg.caption;
+
 			}
 
 			// function to scroll to the previous image.
