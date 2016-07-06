@@ -18,38 +18,109 @@
 // create a gallery function.
 function gallery() {
 
+	// initiate the variables required for the gallery function.
 	var galleryBg,
-		imgArray,
-		curImg,
-		topPos,
-		parent,
-		firstImg,
-		lastImg,
-		nextSib,
-		newA,
-		newHref,
-		newTitle,
-		newAlt,
-		prevSib,
-		lbClose,
-		newImg,
-		lbImg,	// gallery image || gallery video.
-		flag = false,
+		imgLink, // store the current images href value.
+		imgArray = [], // empty image array variable.
+		curImg, // store the clicked image.
+		topPos, // store the current top position of the browser window.
+		lbClose, // store the gallery close element when the gallery is active.
+		lbImg,	// store the gallery image || gallery video element.
+		newHref, // store the new images href attribute.
+		flag = false, // used to determine whether the image gallery is active or not.
 		list = document.getElementById('gallery-wrap').children;	// create a list of the images.
 
-	// get the element that receives that triggers a click.
+	// create array of gallery images - takes 1 argument (a list of children).
+	// returns an array object.
+	function toArray(arr) {
+
+		// loop through all the images in list incrementing the count.
+		for(var i = 0, array = []; i < arr.length; i++)
+
+			// for each image in the list, push into the array object.
+			array.push(arr[i]);
+
+		// return the array to the function.
+		return array
+	} // end of the toArray function.
+
+	// assign the toArray function to the imgArray array - passing in the list variable as the list of objects.
+	imgArray = toArray(list);
+
+	// shutDwn function to close the image gallery.
+	function shutDwn () {
+
+		// change the css display property of the gallery background to 'none'.
+		galleryBg.style.display = 'none';
+
+		// enable body scrolling.
+		document.body.style.overflowY = 'visible';
+
+		// remove the element.
+		document.body.removeChild(galleryBg);
+
+	} // end of the shutDwn function.
+
+	// add an event listener to get the element that triggers a click.
 	document.addEventListener("click", function(e){
 
 		// prevent default anchor click behaviour.
-		var imgLink;
 		e.preventDefault() && e.stopPropagation();
 
-		// gallery already set, close it down.
-		function shutDwn () {
-			galleryBg.style.display = 'none';	// change the css display property of the gallery background to 'none'.
-			document.body.style.overflowY = 'visible'; // enable body scrolling.
-			document.body.removeChild(galleryBg);
-		}
+		// getCurImg function to get the position of the current image - takes 1 argument (the target element).
+		function getCurImg(elem){
+
+			// initiate a count.
+			var i = 0;
+
+			// loop through the elements previous sibling elements until we get the parent.
+			while((elem = elem.previousElementSibling)!= null) i++;
+
+			// return the value of the count.
+			return i;
+
+		} // end of the getCurImg function.
+
+		// get the parent li of the target img and assign to curImg variable.
+		curImg = e.target.parentNode.parentNode;
+
+		// assign the value return from the getCurImg function to the img_num variable, passing in the value of curImg to the function.
+		var img_num = getCurImg(curImg); // console.log('target num is ' + img_num);
+
+		// get the number of images from the imgArray variable and assign to the image_length variable.
+		var image_length = imgArray.length - 1;
+
+
+		// function to change the image when clicked ( increasing or decreasing by 1 ) depending on which button is clicked.
+		function changeImg(num) {
+
+			// assign the img_num value to itself plus the value passed in from the function argument (+1 || -1).
+			img_num = img_num + num;
+
+			// check if the current image is the last image in the gallery.
+			if(img_num > image_length) {
+
+				// go back to the start of the gallery.
+				img_num = 0;
+			}
+
+			// check if the current image is the first image in the gallery.
+			if(img_num < 0) {
+
+				// go to the last image in the end of the gallery.
+				img_num = image_length;
+			}
+
+			// assign the href value of the current images anchor href attribute.
+			newHref = imgArray[img_num].children[0].getAttribute('href');
+
+			// assign the value of newHref to the image - referencing the element by name.
+			document.slide.src = newHref;
+
+			// end the function.
+			return false;
+
+		} // end of the changeImg function.
 
 		// check to see if the gallery has been created, if not create the gallery and set the flag.
 		if (flag !== false) {
@@ -64,7 +135,7 @@ function gallery() {
 			galleryBg.className = 'gallery-bg';
 
 			// calculate the page top location by getting the users Y-offset position.
-			topPos = window.pageYOffset; //console.log(topPos);
+			topPos = window.pageYOffset;
 
 			// assign galleryBg top positioning values.
 			galleryBg.style.top = topPos + 'px';
@@ -72,7 +143,7 @@ function gallery() {
 			// append the gallery background to the body.
 			document.body.appendChild(galleryBg);
 
-			// disable scroll on the body.
+			// disable vertical scrolling on the body.
 			document.body.style.overflowY = 'hidden';
 
 			// set the link to the hiRes image.
@@ -87,17 +158,18 @@ function gallery() {
 				nextArrow = document.createElement('span');	// right addle navigation.
 			lbClose = document.createElement('div');	// gallery exit button.
 
-			// check if we need a <img> || <video> element created.
+			// check if we need a <img> || <iframe> element created.
 			if (imgLink.split('.').pop() === 'jpg') {
-				// build the image.
+				// build the image element (img).
 				lbImg = document.createElement('img');
 				lbImg.setAttribute('src', imgLink);
+				lbImg.setAttribute('name', 'slide');
 			} else {
-				// build the video.
+				// build the video element (iframe).
 				lbImg = document.createElement('iframe');
 				lbImg.setAttribute('src', imgLink);
+				lbImg.setAttribute('name', 'slide');
 				lbImg.setAttribute('frameborder', '0');
-				// lbImg.setAttributeNode('allowfullscreen');
 			}
 
 			// assign the values to each newly created element.
@@ -105,153 +177,13 @@ function gallery() {
 			lbCaption.innerHTML = caption;
 			lbClose.innerHTML = '<h1 class="exit">X</h1>';
 
-			// function to scroll to the next image.
-			function nextImg() {
-
-				// get the index position of the clicked element.
-
-					// get the parent element.
-					var parent = document.getElementById('gallery-wrap');
-
-					// get current images li.
-					var clickedImg = e.target.parentNode.parentNode;
-
-					// get the index of the clicked image.
-					function getIndex() {
-
-						// loop through the list of images incrementing the count[i].
-						for (var i = 0, len = list.length; i < len; i++) {
-
-							// check if the clicked image is equal to the count number.
-							if (clickedImg === list[i]) {
-
-								// return the count to the function.
-								return i;
-							}
-						}
-					}
-
-				// assign the returned value of the getIndex function to curImg.
-				curImg = getIndex(); // console.log(curImg);
-
-				if (curImg === parent.children.length - 1) {
-					curImg = 0;
-					nextSib = curImg;
-					// console.log(nextSib);
-				} else {
-					curImg ++;
-					nextSib = curImg;
-					// console.log('the next sibling is ' + nextSib);
-				}
-
-				// create array of gallery images.
-				function toArray() {
-
-					// loop through all the images in list incrementing the count.
-					for(var i = 0, array = []; i < list.length; i++)
-
-						// for each image in the list, push into the array object.
-						array.push(list[i]);
-
-						// return the array to the function.
-						return array
-				}
-				// assign the value of the toArray function to the imageArr variable.
-				imgArray = toArray(); //console.log(imgArray[nextSib]);
-
-				// get the image information for the next sibling.
-				// get the next anchor element.
-				newA = imgArray[nextSib].children[0]; //console.log(newA.children[0]);
-
-				// get the href attribute [ *div ~ div > a(href) ]
-				newHref = newA.getAttribute('href'); //console.log(newHref);
-
-				// get the next images title and alt attributes [ div > a > img(title & alt) ]
-				newTitle = newA.children[0].getAttribute('title');
-				newAlt = newA.children[0].getAttribute('alt');
-
-				// construct the next image attributes.
-				newImg = {
-					imgLink: newHref,
-					title: newTitle,
-					caption: newAlt
-				};
-
-				// check if we need a <img> || <video> element created.
-				if (newImg.imgLink.split('.').pop() === 'jpg') {
-					// build the image.
-					lbImg = document.createElement('img');
-					lbImg.setAttribute('src', newImg.imgLink);
-				} else {
-					// build the video.
-					lbImg = document.createElement('iframe');
-					lbImg.setAttribute('src', newImg.imgLink);
-					lbImg.setAttribute('frameborder', '0');
-					// lbImg.setAttributeNode('allowfullscreen');
-				}
-
-				lbTitle.innerHTML = newImg.title;
-				lbCaption.innerHTML = newImg.caption;
-
-			}
-
-			// function to scroll to the previous image.
-			function prevImg() {
-
-				// get the target elements parent [ img < a < *div ].
-				parent = e.target.parentNode.parentNode;
-
-				// the first sibling - if the nextSib === null.
-				firstImg = document.getElementById('gallery-wrap').firstElementChild;
-
-				// the last image.
-				lastImg = document.getElementById('gallery-wrap').lastElementChild;
-
-				// check if the first image was click.
-				if (parent == firstImg) {
-					// get the last image as the next sibling.
-					prevSib = firstImg;
-					// console.log(prevSib);
-				} else {
-					prevSib = parent.previousElementSibling;
-					// console.log(prevSib);
-				}
-
-				// get the previous anchor element.
-				newA = prevSib.children[0];
-
-				// get the href attribute [ *div ~ div > a(href) ]
-				newHref = newA.getAttribute('href');
-
-				// get the next images title and alt attributes [ div > a > img(title & alt) ]
-				newTitle = newA.children[0].getAttribute('title');
-				newAlt = newA.children[0].getAttribute('alt');
-
-				// console.log(newAlt);
-
-				// construct the next image attributes.
-				newImg = {
-					imgLink: newHref,
-					title: newTitle,
-					caption: newAlt
-				};
-
-
-				// get the number of images in the gallery.
-				//var count = document.getElementById('gallery-wrap').children.length;
-				// console.log(count);
-
-				lbImg.setAttribute('src', newImg.imgLink);
-				lbTitle.innerHTML = newImg.title;
-				lbCaption.innerHTML = newImg.caption;
-			}
-
-			// add the onclick function nextImg to the next arrow.
-			nextArrow.addEventListener('click', nextImg);
-			prevArrow.addEventListener('click', prevImg);
+			// add a click event listener and pass in the changeImg function with 1 argument.
+			nextArrow.addEventListener('click', function(e){changeImg(1)});
+			prevArrow.addEventListener('click', function(e){changeImg(-1)});
 			prevArrow.className = 'prevArrow';
 			nextArrow.className = 'nextArrow';
 			lbClose.setAttribute('id', 'close');
+			lbClose.addEventListener('click', shutDwn);
 
 			// append to the gallery background element in order of display.
 			galleryBg.appendChild(lbClose);
