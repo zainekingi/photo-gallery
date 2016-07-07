@@ -147,30 +147,34 @@ function gallery() {
 			document.body.style.overflowY = 'hidden';
 
 			// set the link to the hiRes image.
-			imgLink = e.target.parentNode.href;
-			var title = e.target.title;
-			var caption = e.target.alt;
+			imgLink = e.target.parentNode.href; // set the value of imgLink to the img that triggered the click events parent a tag's href value.
+			var title = e.target.title; // instantiate a title variable and assign the title value of the img that triggered the click event.
+			var caption = e.target.alt; // instantiate a caption variable and assign the alt value of the img that triggered the click event.
 
 			// create the DOM elements for each needed element.
-			var lbTitle = document.createElement('h2'),		// image title.
-				lbCaption = document.createElement('p'),	// image caption.
-				prevArrow = document.createElement('span'),	// left paddle navigation.
-				nextArrow = document.createElement('span');	// right addle navigation.
-			lbClose = document.createElement('div');	// gallery exit button.
+			var lbTitle = document.createElement('h2'),		// create the image title.
+				lbCaption = document.createElement('p'),	// create the image caption.
+				prevArrow = document.createElement('span'),	// create the left paddle navigation.
+				nextArrow = document.createElement('span');	// create the right addle navigation.
+			lbClose = document.createElement('div');	// create the gallery exit button.
 
 			// check if we need a <img> || <iframe> element created.
 			if (imgLink.split('.').pop() === 'jpg') {
+
 				// build the image element (img).
-				lbImg = document.createElement('img');
-				lbImg.setAttribute('src', imgLink);
-				lbImg.setAttribute('name', 'slide');
+				lbImg = document.createElement('img'); // create the img element assigning to the lbImg variable.
+				lbImg.setAttribute('src', imgLink); // set the src attribute for the img element and setting the src value to the value of imgLink.
+				lbImg.setAttribute('name', 'slide'); // set the name attribute and value for the img element, this is used to update the image information [src, title, description].
+
 			} else {
+
 				// build the video element (iframe).
-				lbImg = document.createElement('iframe');
-				lbImg.setAttribute('src', imgLink);
-				lbImg.setAttribute('name', 'slide');
-				lbImg.setAttribute('frameborder', '0');
-			}
+				lbImg = document.createElement('iframe'); // create the iframe element assigning to the lbImg variable.
+				lbImg.setAttribute('src', imgLink); //set the src attribute for the img element and setting the src value to the value of imgLink.
+				lbImg.setAttribute('name', 'slide'); //set the name attribute and value for the img element, this is used to update the image information [src, title, description].
+				lbImg.setAttribute('frameborder', '0'); // set extra iframe attribute to remove any borders.
+
+			} // end of 'if' statement.
 
 			// assign the values to each newly created element.
 			lbTitle.innerHTML = title;
