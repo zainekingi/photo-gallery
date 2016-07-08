@@ -61,146 +61,156 @@ function gallery() {
 
 	} // end of the shutDwn function.
 
-	// add an event listener to get the element that triggers a click.
-	document.addEventListener("click", function(e){
-
-		// prevent default anchor click behaviour.
-		e.preventDefault() && e.stopPropagation();
-
-		// getCurImg function to get the position of the current image - takes 1 argument (the target element).
-		function getCurImg(elem){
-
-			// initiate a count.
-			var i = 0;
-
-			// loop through the elements previous sibling elements until we get the parent.
-			while((elem = elem.previousElementSibling)!= null) i++;
-
-			// return the value of the count.
-			return i;
-
-		} // end of the getCurImg function.
-
-		// get the parent li of the target img and assign to curImg variable.
-		curImg = e.target.parentNode.parentNode;
-
-		// assign the value return from the getCurImg function to the img_num variable, passing in the value of curImg to the function.
-		var img_num = getCurImg(curImg); // console.log('target num is ' + img_num);
-
-		// get the number of images from the imgArray variable and assign to the image_length variable.
-		var image_length = imgArray.length - 1;
 
 
-		// function to change the image when clicked ( increasing or decreasing by 1 ) depending on which button is clicked.
-		function changeImg(num) {
+	document.addEventListener('click', function (e){
 
-			// assign the img_num value to itself plus the value passed in from the function argument (+1 || -1).
-			img_num = img_num + num;
+		// check if the target element was an IMG.
+		if (e.target && e.target.nodeName == 'IMG') {
 
-			// check if the current image is the last image in the gallery.
-			if(img_num > image_length) {
+			// prevent default anchor click behaviour.
+			e.preventDefault();
 
-				// go back to the start of the gallery.
-				img_num = 0;
-			}
+			var target = e.target.nodeName || e.srcElement.nodeName; // console.log(target);
 
-			// check if the current image is the first image in the gallery.
-			if(img_num < 0) {
+			// getCurImg function to get the position of the current image - takes 1 argument (the target element).
+			function getCurImg(elem) {
 
-				// go to the last image in the end of the gallery.
-				img_num = image_length;
-			}
+				// initiate a count.
+				var i = 0;
 
-			// assign the href value of the current images anchor href attribute.
-			newHref = imgArray[img_num].children[0].getAttribute('href');
+				// loop through the elements previous sibling elements until we get the parent.
+				while ((elem = elem.previousElementSibling) != null) i++;
 
-			// assign the value of newHref to the image - referencing the element by name.
-			document.slide.src = newHref;
+				// return the value of the count.
+				return i;
 
-			// end the function.
-			return false;
+			} // end of the getCurImg function.
 
-		} // end of the changeImg function.
+			// get the parent li of the target img and assign to curImg variable.
+			curImg = e.target.parentNode.parentNode;
 
-		// check to see if the gallery has been created, if not create the gallery and set the flag.
-		if (flag !== false) {
+			// assign the value return from the getCurImg function to the img_num variable, passing in the value of curImg to the function.
+			var img_num = getCurImg(curImg); // console.log('target num is ' + img_num);
 
-			// gallery is already triggered, add the shutDwn function to the close button.
-			lbClose.addEventListener('click', shutDwn);
+			// get the number of images from the imgArray variable and assign to the image_length variable.
+			var image_length = imgArray.length - 1;
 
-		} else {
 
-			// create a black back drop when a click is triggered.
-			galleryBg = document.createElement('div');
-			galleryBg.className = 'gallery-bg';
+			// function to change the image when clicked ( increasing or decreasing by 1 ) depending on which button is clicked.
+			function changeImg(num) {
 
-			// calculate the page top location by getting the users Y-offset position.
-			topPos = window.pageYOffset;
+				// assign the img_num value to itself plus the value passed in from the function argument (+1 || -1).
+				img_num = img_num + num;
 
-			// assign galleryBg top positioning values.
-			galleryBg.style.top = topPos + 'px';
+				// check if the current image is the last image in the gallery.
+				if (img_num > image_length) {
 
-			// append the gallery background to the body.
-			document.body.appendChild(galleryBg);
+					// go back to the start of the gallery.
+					img_num = 0;
+				}
 
-			// disable vertical scrolling on the body.
-			document.body.style.overflowY = 'hidden';
+				// check if the current image is the first image in the gallery.
+				if (img_num < 0) {
 
-			// set the link to the hiRes image.
-			imgLink = e.target.parentNode.href; // set the value of imgLink to the img that triggered the click events parent a tag's href value.
-			var title = e.target.title; // instantiate a title variable and assign the title value of the img that triggered the click event.
-			var caption = e.target.alt; // instantiate a caption variable and assign the alt value of the img that triggered the click event.
+					// go to the last image in the end of the gallery.
+					img_num = image_length;
+				}
 
-			// create the DOM elements for each needed element.
-			var lbTitle = document.createElement('h2'),		// create the image title.
-				lbCaption = document.createElement('p'),	// create the image caption.
-				prevArrow = document.createElement('span'),	// create the left paddle navigation.
-				nextArrow = document.createElement('span');	// create the right addle navigation.
-			lbClose = document.createElement('div');	// create the gallery exit button.
+				// assign the href value of the current images anchor href attribute.
+				newHref = imgArray[img_num].children[0].getAttribute('href');
 
-			// check if we need a <img> || <iframe> element created.
-			if (imgLink.split('.').pop() === 'jpg') {
+				// assign the value of newHref to the image - referencing the element by name.
+				document.slide.src = newHref;
 
-				// build the image element (img).
-				lbImg = document.createElement('img'); // create the img element assigning to the lbImg variable.
-				lbImg.setAttribute('src', imgLink); // set the src attribute for the img element and setting the src value to the value of imgLink.
-				lbImg.setAttribute('name', 'slide'); // set the name attribute and value for the img element, this is used to update the image information [src, title, description].
+				// end the function.
+				return false;
+
+			} // end of the changeImg function.
+
+			// check to see if the gallery has been created, if not create the gallery and set the flag.
+			if (flag !== false || target === 'UL') {
+
+				// gallery is already triggered, add the shutDwn function to the close button.
+				lbClose.addEventListener('click', shutDwn);
 
 			} else {
 
-				// build the video element (iframe).
-				lbImg = document.createElement('iframe'); // create the iframe element assigning to the lbImg variable.
-				lbImg.setAttribute('src', imgLink); //set the src attribute for the img element and setting the src value to the value of imgLink.
-				lbImg.setAttribute('name', 'slide'); //set the name attribute and value for the img element, this is used to update the image information [src, title, description].
-				lbImg.setAttribute('frameborder', '0'); // set extra iframe attribute to remove any borders.
+				// create a black back drop when a click is triggered.
+				galleryBg = document.createElement('div');
+				galleryBg.className = 'gallery-bg';
 
-			} // end of 'if' statement.
+				// calculate the page top location by getting the users Y-offset position.
+				topPos = window.pageYOffset;
 
-			// assign the values to each newly created element.
-			lbTitle.innerHTML = title;
-			lbCaption.innerHTML = caption;
-			lbClose.innerHTML = '<h1 class="exit">X</h1>';
+				// assign galleryBg top positioning values.
+				galleryBg.style.top = topPos + 'px';
 
-			// add a click event listener and pass in the changeImg function with 1 argument.
-			nextArrow.addEventListener('click', function(e){changeImg(1)});
-			prevArrow.addEventListener('click', function(e){changeImg(-1)});
-			prevArrow.className = 'prevArrow';
-			nextArrow.className = 'nextArrow';
-			lbClose.setAttribute('id', 'close');
-			lbClose.addEventListener('click', shutDwn);
+				// append the gallery background to the body.
+				document.body.appendChild(galleryBg);
 
-			// append to the gallery background element in order of display.
-			galleryBg.appendChild(lbClose);
-			galleryBg.appendChild(lbImg);
-			galleryBg.appendChild(lbTitle);
-			galleryBg.appendChild(lbCaption);
-			galleryBg.appendChild(prevArrow);
-			galleryBg.appendChild(nextArrow);
+				// disable vertical scrolling on the body.
+				document.body.style.overflowY = 'hidden';
 
-			// set the flag to true and return to the function.
-			return flag = true;
+				// set the link to the hiRes image.
+				imgLink = e.target.parentNode.href; // set the value of imgLink to the img that triggered the click events parent a tag's href value.
+				var title = e.target.title; // instantiate a title variable and assign the title value of the img that triggered the click event.
+				var caption = e.target.alt; // instantiate a caption variable and assign the alt value of the img that triggered the click event.
+
+				// create the DOM elements for each needed element.
+				var lbTitle = document.createElement('h2'),		// create the image title.
+					lbCaption = document.createElement('p'),	// create the image caption.
+					prevArrow = document.createElement('span'),	// create the left paddle navigation.
+					nextArrow = document.createElement('span');	// create the right addle navigation.
+				lbClose = document.createElement('div');	// create the gallery exit button.
+
+				// check if we need a <img> || <iframe> element created.
+				if (imgLink.split('.').pop() === 'jpg') {
+
+					// build the image element (img).
+					lbImg = document.createElement('img'); // create the img element assigning to the lbImg variable.
+					lbImg.setAttribute('src', imgLink); // set the src attribute for the img element and setting the src value to the value of imgLink.
+					lbImg.setAttribute('name', 'slide'); // set the name attribute and value for the img element, this is used to update the image information [src, title, description].
+
+				} else {
+
+					// build the video element (iframe).
+					lbImg = document.createElement('iframe'); // create the iframe element assigning to the lbImg variable.
+					lbImg.setAttribute('src', imgLink); //set the src attribute for the img element and setting the src value to the value of imgLink.
+					lbImg.setAttribute('name', 'slide'); //set the name attribute and value for the img element, this is used to update the image information [src, title, description].
+					lbImg.setAttribute('frameborder', '0'); // set extra iframe attribute to remove any borders.
+
+				} // end of 'if' statement.
+
+				// assign the values to each newly created element.
+				lbTitle.innerHTML = title;
+				lbCaption.innerHTML = caption;
+				lbClose.innerHTML = '<h1 class="exit">X</h1>';
+
+				// add a click event listener and pass in the changeImg function with 1 argument.
+				nextArrow.addEventListener('click', function (e) {
+					changeImg(1)
+				});
+				prevArrow.addEventListener('click', function (e) {
+					changeImg(-1)
+				});
+				prevArrow.className = 'prevArrow';
+				nextArrow.className = 'nextArrow';
+				lbClose.setAttribute('id', 'close');
+				lbClose.addEventListener('click', shutDwn);
+
+				// append to the gallery background element in order of display.
+				galleryBg.appendChild(lbClose);
+				galleryBg.appendChild(lbImg);
+				galleryBg.appendChild(lbTitle);
+				galleryBg.appendChild(lbCaption);
+				galleryBg.appendChild(prevArrow);
+				galleryBg.appendChild(nextArrow);
+
+				// set the flag to true and return to the function.
+				return flag = true;
+			}
 		}
-
 	});
 
 }
