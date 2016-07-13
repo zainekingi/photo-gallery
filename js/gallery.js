@@ -27,6 +27,8 @@ function gallery() {
 		lbClose, // store the gallery close element when the gallery is active.
 		lbImg,	// store the gallery image || gallery video element.
 		newHref, // store the new images href attribute.
+		newTitle, // store the new images title.
+		newCaption, // store the new caption.
 		flag = false, // used to determine whether the image gallery is active or not.
 		list = document.getElementById('gallery-wrap').children;	// create a list of the images.
 
@@ -117,11 +119,19 @@ function gallery() {
 					img_num = image_length;
 				}
 
-				// assign the href value of the current images anchor href attribute.
+				// assign the href value of the next images child anchor href value as the newHref value.
 				newHref = imgArray[img_num].children[0].getAttribute('href');
 
-				// assign the value of newHref to the image - referencing the element by name.
+				// assign the title value of the next images child anchor title value as the newTitle value.
+				newTitle = imgArray[img_num].children[0].getAttribute('title');
+
+				// assign the alt value of the next img element as the newCaption value.
+				newCaption = imgArray[img_num].children[0].children[0].getAttribute('alt');
+
+				// assign the values to the page elements.
 				document.slide.src = newHref;
+				lbTitle.innerHTML = newTitle;
+				lbCaption.innerHTML = newCaption;
 
 				// end the function.
 				return false;
