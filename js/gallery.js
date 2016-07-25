@@ -43,7 +43,7 @@ function gallery() {
 			array.push(arr[i]);
 
 		// return the array to the function.
-		return array
+		return array;
 	} // end of the toArray function.
 
 	// assign the toArray function to the imgArray array - passing in the list variable as the list of objects.
@@ -76,31 +76,31 @@ function gallery() {
 			var target = e.target.nodeName || e.srcElement.nodeName; // console.log(target);
 
 			// getCurImg function to get the position of the current image - takes 1 argument (the target element).
-			function getCurImg(elem) {
+			var gci = function getCurImg(elem) {
 
 				// initiate a count.
 				var i = 0;
 
 				// loop through the elements previous sibling elements until we get the parent.
-				while ((elem = elem.previousElementSibling) != null) i++;
+				while ((elem = elem.previousElementSibling) !== null) i++;
 
 				// return the value of the count.
 				return i;
 
-			} // end of the getCurImg function.
+			}; // end of the getCurImg function.
 
 			// get the parent li of the target img and assign to curImg variable.
 			curImg = e.target.parentNode.parentNode;
 
 			// assign the value return from the getCurImg function to the img_num variable, passing in the value of curImg to the function.
-			var img_num = getCurImg(curImg); // console.log('target num is ' + img_num);
+			var img_num = gci(curImg); // console.log('target num is ' + img_num);
 
 			// get the number of images from the imgArray variable and assign to the image_length variable.
 			var image_length = imgArray.length - 1;
 
 
 			// function to change the image when clicked ( increasing or decreasing by 1 ) depending on which button is clicked.
-			function changeImg(num) {
+			var ci = function changeImg(num) {
 
 				// assign the img_num value to itself plus the value passed in from the function argument (+1 || -1).
 				img_num = img_num + num;
@@ -136,7 +136,7 @@ function gallery() {
 				// end the function.
 				return false;
 
-			} // end of the changeImg function.
+			}; // end of the changeImg function.
 
 			// check to see if the gallery has been created, if not create the gallery and set the flag.
 			if (flag !== false || target === 'UL') {
@@ -199,10 +199,10 @@ function gallery() {
 
 				// add a click event listener and pass in the changeImg function with 1 argument.
 				nextArrow.addEventListener('click', function (e) {
-					changeImg(1)
+					ci(1);
 				});
 				prevArrow.addEventListener('click', function (e) {
-					changeImg(-1)
+					ci(-1);
 				});
 				prevArrow.className = 'prevArrow';
 				nextArrow.className = 'nextArrow';
