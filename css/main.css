@@ -5,7 +5,7 @@
  ====================================================================*/
 
 /* Base Styling */
-body {
+* {
     overflow-x: hidden;
 }
 ul {
@@ -138,7 +138,7 @@ input[type='search'] {
     -o-transition: all .5s;
 }
 .gallery-img:hover {
-    border-color: #00A000;
+    border-color: #f5ffff;
 }
 
 /* Footer Elements */
@@ -195,10 +195,14 @@ footer {
 * Description: Media query for small device screens 760px +.
 ============================================================*/
 @media (min-width: 760px) {
+    .wrapper {
+        width: 100%;
+        margin: 0 auto;
+    }
     .header-wrap {
         flex-direction: row;
         justify-content: space-between;
-        max-width: 980px;
+        width: 100%;
     }
     .title {
         margin: 0 auto;
