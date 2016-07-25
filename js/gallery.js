@@ -73,7 +73,7 @@ function gallery() {
 			// prevent default anchor click behaviour.
 			e.preventDefault();
 
-			var target = e.target.nodeName || e.srcElement.nodeName; // console.log(target);
+			var target = e.target.nodeName || e.srcElement.nodeName;
 
 			// getCurImg function to get the position of the current image - takes 1 argument (the target element).
 			var gci = function getCurImg(elem) {
@@ -93,7 +93,7 @@ function gallery() {
 			curImg = e.target.parentNode.parentNode;
 
 			// assign the value return from the getCurImg function to the img_num variable, passing in the value of curImg to the function.
-			var img_num = gci(curImg); // console.log('target num is ' + img_num);
+			var img_num = gci(curImg);
 
 			// get the number of images from the imgArray variable and assign to the image_length variable.
 			var image_length = imgArray.length - 1;
@@ -218,7 +218,7 @@ function gallery() {
 				galleryBg.appendChild(nextArrow);
 
 				// set the flag to true and return to the function.
-				return flag = true;
+				flag = true;
 			}
 		}
 	});
