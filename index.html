@@ -1,5 +1,5 @@
 <!DOCTYPE HTML>
-<html>
+<html lang="en">
     <head>
         <link href='https://fonts.googleapis.com/css?family=Merriweather:300italic,700,300' rel='stylesheet' type='text/css'>
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -7,11 +7,11 @@
         <link rel="stylesheet" href="css/NormalizeCss1.0.min.css">
         <link rel="stylesheet" href="css/main.css">
     </head>
-    <body>
+    <body onload="sticky()">
         <div class="wrapper">
-            <div class="header">
+            <div class="header" id="header">
                 <div class="header-wrap">
-                    <div class="title">
+                    <div id="title">
                         <h1>Zaine's Photo Gallery</h1>
                         <p>A life-time of travel inspiration.</p>
                     </div>
@@ -80,7 +80,7 @@
                     </a>
                 </li>
                 <li class="gallery-img">
-                    <a href='https://www.youtube.com/embed/VAbRg7xUtVU' title="Teenage Mutant Ninja Turtles 2">
+                    <a href='http://www.youtube.com/embed/VAbRg7xUtVU' title="Teenage Mutant Ninja Turtles 2">
                         <img src="imgs/thumb/13.jpg" alt="TEENAGE MUTANT NINJA TURTLES: OUT OF THE SHADOWS is the sequel to the 2014 hit film 'TEENAGE MUTANT NINJA TURTLES'." title="Teenage Mutant Ninja Turtles 2" rel="img-gallery">
                     </a>
                 </li>
@@ -92,5 +92,6 @@
         <script type="text/javascript" src="bower_components/jquery/dist/jquery.min.js"></script>
         <script type="text/javascript" src="js/gallery.js"></script>
         <script type="text/javascript" src="js/search.js"></script>
+        <script type="text/javascript" src="js/header.js"></script>
     </body>
 </html>
