@@ -19,51 +19,33 @@ function sticky() {
 	// set the header element.
 	var h = document.getElementById('header');
 
-	// get the current header height.
-	var hycoords = h.offsetHeight; //189
-
-	// set the gallery container element.
-	var g = document.getElementById('gallery-wrap');
-
-	// get the current Y position of the gallery container.
-	var gycoords = g.offsetTop; // 180
-
-	// get the browser viewport height.
-	var viewporth = document.documentElement.clientHeight; //console.log(viewporth);
-
+	// set the header elements to be edited.
 	var sbar, tagline;
 	sbar = document.getElementById('search');
 	tagline = document.getElementById('title').children; //console.log(tagline);
 
-	// if the Y position of the gallery container is at 0:
+	// add a scroll event listener on the window.
 	window.addEventListener('scroll', function() {
 
+		// check the offset Y position of the window is greater 80.
 		if (window.pageYOffset > 80) {
 
-			// edit the css properties of the header element:
-			// height set to 50px and reduce opacity and padding.
-			h.style.transition = 'all .2s ease-in-out';
-			h.style.padding = '10px 0';
-			//h.style.height = '50px';
-			sbar.style.marginTop = '5px';
-			tagline[0].style.lineHeight = '0';
-
-			// gallery tagline removed.
-			tagline[1].style.display = 'none';
-			tagline[1].style.height = '0';
+			// if true, resize the header and reorder the header elements.
+			// edit the css properties of the header and header elements to fit within the resized smaller header:
+			h.style.transition = 'all .2s ease-in-out';	// animate the header changes.
+			h.style.padding = '10px 0';					// reduce the padding of the header container.
+			sbar.style.marginTop = '5px';				// reduce the top margin of the search bar element.
+			tagline[0].style.lineHeight = '0';			// reduce the line-height of the H1 element.
+			tagline[1].style.display = 'none';			// remove the gallery tagline.
 
 		} else {
 
-			// edit the css properties of the header element:
-			// height set to 50px and reduce opacity and padding.
-			h.style.transition = 'all .2s ease-in-out';
-			h.style.padding = '50px 0';
-			h.style.height = '90px';
-			sbar.style.margin = 'auto';
-			tagline[0].style.lineHeight = 'normal';
-
-			// gallery tagline removed.
-			tagline[1].style.display = 'block';
+			// restore base styling of the header and header elements:
+			h.style.padding = '50px 0';				// restore header padding.
+			h.style.height = '90px';				// restore the header height.
+			sbar.style.margin = 'auto';             // restore the search bar margins.
+			tagline[0].style.lineHeight = 'normal';	// set the H1 line-height to normal.
+			tagline[1].style.display = 'block';     // show the gallery tagline.
 
 		}
 	});
