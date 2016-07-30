@@ -171,7 +171,7 @@ function gallery() {
 				var lbTitle = document.createElement('h2'),		// create the image title.
 					lbCaption = document.createElement('p'),	// create the image caption.
 					prevArrow = document.createElement('span'),	// create the left paddle navigation.
-					nextArrow = document.createElement('span');	// create the right addle navigation.
+					nextArrow = document.createElement('span'),	// create the right addle navigation.
 				lbClose = document.createElement('div');	// create the gallery exit button.
 
 				// check if we need a <img> || <iframe> element created.
