@@ -27,13 +27,13 @@ function search() {
 		// assign the value to val converting the value to lowercase.
 		var value = $.trim($(this).val()).replace(/ +/g, ' ').toLowerCase(); //console.log(val);
 
-		// function to filter through the imgArr and show matches to 'val'.
+		// function to filter through the imgArr and show matches to 'val' - filtering titles.
 		li.show().filter(function (){
-			// assign the image element titles to text and convert to lowercase.
-			var text = $(this).children().attr('title').replace(/\s+/g, ' ').toLowerCase();
+			// get all anchor tag titles, convert to lowercase and assign to variable.
+			var title = $(this).children().attr('title').replace(/\s+/g, ' ').toLowerCase();
 
-			// return text.
-			return !~text.indexOf(value);
+			// return the results after comparing to the users input.
+			return !~title.indexOf(value);
 		}).hide();
 
 	});
