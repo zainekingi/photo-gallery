@@ -63,12 +63,11 @@ function gallery() {
 
 	} // end of the shutDwn function.
 
-
-
 	document.addEventListener('click', function (e){
 
 		// check if the target element was an IMG.
-		if (e.target && e.target.nodeName == 'IMG') {
+		if (!(e.target && e.target.nodeName == 'IMG')) {
+		} else {
 
 			// prevent default anchor click behaviour.
 			e.preventDefault();
@@ -138,6 +137,7 @@ function gallery() {
 
 			}; // end of the changeImg function.
 
+
 			// check to see if the gallery has been created, if not create the gallery and set the flag.
 			if (flag !== false || target === 'UL') {
 
@@ -172,7 +172,7 @@ function gallery() {
 					lbCaption = document.createElement('p'),	// create the image caption.
 					prevArrow = document.createElement('span'),	// create the left paddle navigation.
 					nextArrow = document.createElement('span'),	// create the right addle navigation.
-				lbClose = document.createElement('div');	// create the gallery exit button.
+					lbClose = document.createElement('div');	// create the gallery exit button.
 
 				// check if we need a <img> || <iframe> element created.
 				if (imgLink.split('.').pop() === 'jpg') {
@@ -204,6 +204,28 @@ function gallery() {
 				prevArrow.addEventListener('click', function (e) {
 					ci(-1);
 				});
+
+				// function to navigate the image gallery with the arrow keys.
+				function keynav(e) {
+
+					// define the key down event.
+					e = e || window.event;
+
+					// check if the left arrow key(37) was pressed.
+					if(e.keyCode == '37') {
+
+						// call the change image function and pass in -1.
+						ci(-1);
+					// check if the right arrow key(39) was pressed.
+					} else if (e.keyCode == '39') {
+						// call the change image function and pass in 1.
+						ci(1);
+					}
+				}
+				// call the keynav function when a key down event is detected in gallery mode.
+				document.onkeydown = keynav;
+
+
 				prevArrow.className = 'prevArrow';
 				nextArrow.className = 'nextArrow';
 				lbClose.setAttribute('id', 'close');
