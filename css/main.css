@@ -58,32 +58,44 @@ ul {
     z-index: 1000;
     display: block;
     cursor: pointer;
+    transition: all .5s;
+    -webkit-transition: all .5s;
+    -moz-transition: all .5s;
+    -o-transition: all .5s;
 }
 #close h1 {
     color: #fff;
     font-weight: 100;
     font-size: 2rem;
 }
+#close:hover {
+    opacity: .6;
+}
 .prevArrow,
 .nextArrow {
     display: block;
     width: 35px;
     height: 75px;
+    background: url('../imgs/lb-paddlenav.png');
     position: absolute;
+    bottom: 2%;
+    transition: all .5s;
+    -webkit-transition: all .5s;
+    -moz-transition: all .5s;
+    -o-transition: all .5s;
 }
 .prevArrow {
-    top: 45%;
     left: 10%;
-    background: url('../imgs/lb-paddlenav.png') left;
+    background-position: left;
 }
 .nextArrow {
-    top: 45%;
     right: 10%;
-    background: url('../imgs/lb-paddlenav.png') right;
+    background-position: right;
 }
 .prevArrow:hover,
 .nextArrow:hover {
     cursor: pointer;
+    opacity: .6;
 }
 
 /* Header Elements */
@@ -163,32 +175,46 @@ footer {
         justify-content: space-between;
         width: 100%;
     }
+
     #title {
         margin: 0 auto;
         padding: 0 10px;
         text-align: left;
     }
+
     #title h1 {
         font-size: 1.5rem;
     }
+
     #title p {
         line-height: 1rem;
     }
+
     input[type='search'] {
         width: 250px;
         height: 25px;
         margin: auto;
     }
+
     #gallery-wrap {
         width: 90%;
         flex-direction: row;
         flex-wrap: wrap;
         justify-content: space-between;
     }
+
     /* Lightbox Element Styling */
     .gallery-bg h2,
     .gallery-bg p {
         text-align: left;
+    }
+
+    .prevArrow {
+        top: 20%;
+    }
+
+    .nextArrow {
+        top: 20%;
     }
 }
 /*-----------------------------------------------------------*
@@ -214,5 +240,12 @@ footer {
     }
     #gallery-wrap {
         max-width: 980px;
+    }
+    .prevArrow {
+        top: 40%;
+    }
+
+    .nextArrow {
+        top: 40%;
     }
 }
