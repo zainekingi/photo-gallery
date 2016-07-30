@@ -29,11 +29,13 @@ function search() {
 
 		// function to filter through the imgArr and show matches to 'val' - filtering titles.
 		li.show().filter(function (){
+
 			// get all anchor tag titles, convert to lowercase and assign to variable.
 			var title = $(this).children().attr('title').replace(/\s+/g, ' ').toLowerCase();
 
 			// return the results after comparing to the users input.
 			return !~title.indexOf(value);
+
 		}).hide();
 
 	});
