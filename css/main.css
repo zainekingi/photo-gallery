@@ -14,6 +14,7 @@ ul {
 /* Lightbox Element Styling */
 .gallery-bg {
     display: block;
+    background-size: cover;
     background-color: rgba(0,0,0,.8);
     background-size: cover;
     width: 100%;
@@ -221,9 +222,12 @@ footer {
 * Description: Media query for small device screens 760px +.
 ============================================================*/
 @media (min-width: 760px) {
+
     .wrapper {
         width: 100%;
         margin: 0 auto;
+        box-sizing: border-box;
+        overflow-x: hidden;
     }
     .header-wrap {
         flex-direction: row;
@@ -239,7 +243,7 @@ footer {
         margin: auto;
     }
     #gallery-wrap {
-        max-width: 980px;
+        max-width: 988px;
     }
     .prevArrow {
         top: 40%;
