@@ -34,7 +34,19 @@ function sticky() {
 			// edit the css properties of the header and header elements to fit within the resized smaller header:
 			h.style.transition = 'all .2s ease-in-out';	// animate the header changes.
 			h.style.padding = '10px 0';					// reduce the padding of the header container.
-			h.style.height = '40px';					// reduce the height of the header container.
+
+			// set the inner width for mobile.
+			var mquery = window.matchMedia('(max-width: 480px)');
+
+			// check if the viewport inner width matches the value of mquery.
+			if (mquery.matches) {
+				// true.
+				h.style.height = '90px';					// increase the height of the header to 90px to accommodate the search bar.
+			} else {
+				// false.
+				h.style.height = '40px';					// reduce the height of the header container.
+			}
+
 			sbar.style.marginTop = '2px';				// reduce the top margin of the search bar element.
 			tagline[0].style.lineHeight = '10px';		// reduce the line-height of the H1 element.
 			tagline[1].style.display = 'none';			// remove the gallery tagline.
