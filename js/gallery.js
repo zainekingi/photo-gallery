@@ -132,9 +132,6 @@ function gallery() {
 				lbTitle.innerHTML = newTitle;
 				lbCaption.innerHTML = newCaption;
 
-				// end the function.
-				return false;
-
 			}; // end of the changeImg function.
 
 
@@ -171,7 +168,7 @@ function gallery() {
 				var lbTitle = document.createElement('h2'),		// create the image title.
 					lbCaption = document.createElement('p'),	// create the image caption.
 					prevArrow = document.createElement('span'),	// create the left paddle navigation.
-					nextArrow = document.createElement('span'),	// create the right addle navigation.
+					nextArrow = document.createElement('span');	// create the right addle navigation.
 					lbClose = document.createElement('div');	// create the gallery exit button.
 
 				// check if we need a <img> || <iframe> element created.
@@ -198,10 +195,10 @@ function gallery() {
 				lbClose.innerHTML = '<h1 class="exit">X</h1>';
 
 				// add a click event listener and pass in the changeImg function with 1 argument.
-				nextArrow.addEventListener('click', function (e) {
+				nextArrow.addEventListener('click', function () {
 					ci(1);
 				});
-				prevArrow.addEventListener('click', function (e) {
+				prevArrow.addEventListener('click', function () {
 					ci(-1);
 				});
 
