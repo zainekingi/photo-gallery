@@ -1,2 +1,2 @@
-# project-4
-Zaine Kingi's Project-4 Photo Gallery Treehouse assessment 4 project files.
+# Photo Gallery
+HTML, CSS and vanilla JavaScript photo gallery - built from scratch, no libraries or plugins.
